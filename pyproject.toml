@@ -1,0 +1,36 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "kimi-nocost"
+version = "0.1.2"
+description = "Unofficial Python client for Kimi AI — no API key required, reverse-engineered"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "addy", email = "pooraddyy@gmail.com" }]
+keywords = ["kimi", "moonshot", "ai", "chat", "llm", "unofficial", "nocost"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = ["requests>=2.32.0"]
+
+[project.urls]
+Homepage = "https://github.com/pooraddyy/kimi-nocost"
+Repository = "https://github.com/pooraddyy/kimi-nocost"
+Issues = "https://github.com/pooraddyy/kimi-nocost/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["kimi_nocost"]
+
+[tool.hatch.build.targets.sdist]
+include = ["kimi_nocost/", "README.md", "pyproject.toml", "LICENSE"]
