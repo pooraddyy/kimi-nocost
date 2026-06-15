@@ -22,7 +22,7 @@
 - Multi-turn conversations — full context preserved across calls
 - Image upload — send up to 20 images at once
 - File upload — send documents, PDFs, code files (max 100 MB each, 1,000 files, 10 GB total)
-- Built-in Models — switch models easily with `Models.K2D6`, `Models.K2D6_THINKING`, etc.
+- Built-in Models — switch models easily with `Models.K2D6`, `Models.K2D6_AGENT`, etc.
 - Lightweight — only depends on `requests`
 
 ---
@@ -46,7 +46,7 @@ reply = client.chat("What is the capital of France?")
 print(reply)
 ```
 
-> `model` is required. Pass it as a plain string — `"kimi"`, `"k2d6"`, `"k2d6-thinking"`, etc.
+> `model` is required. Pass it as a plain string — `"kimi"`, `"k1"`, `"k2d6"`, etc.
 > Omitting it raises a `TypeError`.
 
 ---
@@ -58,12 +58,12 @@ Use the built-in `Models` class to switch between Kimi models:
 ```python
 from kimi_nocost import KimiClient, Models
 
-client = KimiClient(token="your-token", model="k2d6")  # plain string
+client = KimiClient(token="your-token", model=Models.KIMI)
 
 reply = client.chat("Explain transformers")
 print(reply)
 
-client.model = Models.K2D6_THINKING
+client.model = Models.K2D6
 reply = client.chat("Solve this step by step: 2x + 5 = 13")
 print(reply)
 ```
@@ -73,17 +73,14 @@ print(reply)
 | `Models.KIMI` | `kimi` | Default model |
 | `Models.K1` | `k1` | K1 model |
 | `Models.K2D6` | `k2d6` | K2.6 Instant — fast responses |
-| `Models.K2D6_THINKING` | `k2d6-thinking` | K2.6 Thinking — deep reasoning |
 | `Models.K2D6_AGENT` | `k2d6-agent` | K2.6 Agent — research, slides, docs |
-| `Models.K2D6_AGENT_ULTRA` | `k2d6-agent-ultra` | K2.6 Agent Ultra |
-| `Models.OK_COMPUTER` | `ok-computer` | OK Computer agent |
 
 ---
 
 ## Multi-Turn Conversation
 
 ```python
-client = KimiClient(token="your-token")
+client = KimiClient(token="your-token", model="kimi")
 
 reply1 = client.chat("My name is Alex.")
 reply2 = client.chat("What is my name?")
@@ -97,7 +94,7 @@ print(reply2)
 ```python
 from kimi_nocost import KimiClient
 
-client = KimiClient(token="your-token")
+client = KimiClient(token="your-token", model="kimi")
 
 for chunk in client.stream("Explain quantum computing in simple terms"):
     print(chunk, end="", flush=True)
@@ -120,7 +117,7 @@ Send up to 20 images in a single call:
 ```python
 from kimi_nocost import KimiClient
 
-client = KimiClient(token="your-token")
+client = KimiClient(token="your-token", model="kimi")
 
 file_ids = client.upload_images([
     "photo1.jpg",
@@ -182,7 +179,7 @@ print(reply2)
 
 ## API Reference
 
-### `KimiClient(token, model=Models.KIMI, timeout=60)`
+### `KimiClient(token, model, timeout=60)`
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
@@ -232,7 +229,7 @@ Pass your token via `Authorization: Bearer <token>` header.
 {
   "message": "Summarize this",
   "file_ids": ["id1", "id2"],
-  "model": "k2d6-thinking"
+  "model": "k2d6-agent"
 }
 ```
 
