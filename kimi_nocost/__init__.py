@@ -3,4 +3,4 @@ from .errors import KimiAPIError, KimiAuthError, KimiError, KimiSessionLimitErro
 from .models import Models
 
 __all__ = ["KimiClient", "KimiError", "KimiAuthError", "KimiAPIError", "KimiUploadError", "KimiSessionLimitError", "Models"]
-__version__ = "0.1.2"
+__version__ = "0.1.3"
