@@ -45,7 +45,7 @@ user_clients: dict[int, KimiClient] = {}
 
 def get_client(user_id: int) -> KimiClient:
     if user_id not in user_clients:
-        user_clients[user_id] = KimiClient(token=KIMI_TOKEN)
+        user_clients[user_id] = KimiClient(token=KIMI_TOKEN, model=Models.KIMI)
     return user_clients[user_id]
 
 
@@ -57,7 +57,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "/start — show this message\n"
         "/new — start a fresh conversation\n"
         "/search <query> — ask with web search enabled\n"
-        "/model <name> — switch model (kimi, k2d6, k2d6-thinking, k2d6-agent)"
+        "/model <name> — switch model (kimi, k1, k2d6, k2d6-agent)"
     )
 
 
@@ -72,7 +72,7 @@ async def switch_model(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not model:
         await update.message.reply_text(
             "Usage: /model <name>\n"
-            "Available: kimi, k1, k2d6, k2d6-thinking, k2d6-agent, k2d6-agent-ultra, ok-computer"
+            "Available: kimi, k1, k2d6, k2d6-agent"
         )
         return
     client = get_client(update.effective_user.id)
@@ -222,8 +222,8 @@ from kimi_nocost import Models
 
 client = KimiClient(token=KIMI_TOKEN, model=Models.K2D6)
 
-client.model = Models.K2D6_THINKING
-reply = client.chat("Solve this math problem step by step: ...")
+client.model = Models.K2D6_AGENT
+reply = client.chat("Research the latest AI news and summarize it")
 ```
 
 ---
@@ -275,7 +275,7 @@ curl -X POST http://localhost:8080/upload/images \
 from kimi_nocost import KimiClient, Models
 import io
 
-client = KimiClient(token="your-kimi-token")
+client = KimiClient(token="your-kimi-token", model=Models.KIMI)
 
 print(client.chat("What is 2 + 2?"))
 print(client.chat("Now multiply that by 10."))
